@@ -1,0 +1,8 @@
+<div class="form_item_block">
+  <label>Image:<span class="asterisk">*</span>
+  </label>
+  <input type="text" ng-model="ImageName" ng-required="true">
+  </input>
+  <span class="form_error" ng-show="GOINPUTNAME[ImageName].$error.url">Invalid image name.</span>
+  <span class="form_error" ng-show="GOINPUTNAME[ImageName].$error.server">{{ GOINPUTNAME[ImageName].$error.server }}</span>
+</div>
