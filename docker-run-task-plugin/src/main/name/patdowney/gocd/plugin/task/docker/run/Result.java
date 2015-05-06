@@ -37,8 +37,8 @@ public class Result {
     }
 
     public Map toMap() {
-        final HashMap<String,String> result = new HashMap<String,String>();
-        result.put("success", String.valueOf(success));
+        final HashMap<String,Object> result = new HashMap<String,Object>();
+        result.put("success", success);
         if(success) {
             result.put("message", message);
         } else {
