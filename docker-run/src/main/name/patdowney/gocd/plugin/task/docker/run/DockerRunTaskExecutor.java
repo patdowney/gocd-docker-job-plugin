@@ -38,25 +38,26 @@ public class DockerRunTaskExecutor {
 
         DockerClient docker = DefaultDockerClient.fromEnv().build();
 	//DockerClient docker = new DefaultDockerClient("unix:///var/run/docker.sock");
-	//
-	console.printLine("Configuring container with image: " + taskConfig.getImageName());
+
+	//console.printLine("Configuring container with image: " + taskConfig.getImageName());
         ContainerConfig containerConfig = ContainerConfig.builder()
                                  .image(taskConfig.getImageName())
                                  .build();
 
 
-        HostConfig hostConfig = HostConfig.builder().build();
-        ContainerCreation creation = docker.createContainer(containerConfig);
+	//console.printLine("Creating container with name: " + taskContext.getPipelineDescription());
+        ContainerCreation creation = docker.createContainer(containerConfig, taskContext.getPipelineDescription());
         String id = creation.id();
-	console.printLine("Created container with id: " + id);
+	//console.printLine("Created container with id: " + id);
 
-// Inspect container
-// final ContainerInfo info = docker.inspectContainer(id);
-//
+        // Inspect container
+        // final ContainerInfo info = docker.inspectContainer(id);
+        //
+
         // Start container
+        HostConfig hostConfig = HostConfig.builder().build();
         docker.startContainer(id, hostConfig);
-	console.printLine("Started container with id: " + id);
-
+	//console.printLine("Started container with id: " + id);
 
         return new Result(true, "Image started: " + id + "(" + taskConfig.getImageName() + ")");
     }
