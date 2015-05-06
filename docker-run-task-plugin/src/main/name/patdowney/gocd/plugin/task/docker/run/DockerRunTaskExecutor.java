@@ -38,12 +38,15 @@ public class DockerRunTaskExecutor {
 
     private Result runImage(Context taskContext, Config taskConfig, JobConsoleLogger console) throws DockerException, DockerCertificateException, InterruptedException {
 
+        final String containerBuildDir = "/build";
+
         DockerClient docker = DefaultDockerClient.fromEnv().build();
 	//DockerClient docker = new DefaultDockerClient("unix:///var/run/docker.sock");
 
 	//console.printLine("Configuring container with image: " + taskConfig.getImageName());
         ContainerConfig containerConfig = ContainerConfig.builder()
                                  .image(taskConfig.getImageName())
+				 .workingDir(containerBuildDir)
                                  .build();
 
 
@@ -57,7 +60,7 @@ public class DockerRunTaskExecutor {
         //
 	
         final ImmutableList.Builder<String> binds = ImmutableList.builder();
-        binds.add(String.format("%s:%s", taskContext.getAbsoluteWorkingDir(), "/build"));
+        binds.add(String.format("%s:%s", taskContext.getAbsoluteWorkingDir(), containerBuildDir));
 
 
         // Start container
