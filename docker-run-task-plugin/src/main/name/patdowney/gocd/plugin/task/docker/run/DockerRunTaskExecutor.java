@@ -39,9 +39,12 @@ public class DockerRunTaskExecutor {
         DockerClient docker = DefaultDockerClient.fromEnv().build();
 	//DockerClient docker = new DefaultDockerClient("unix:///var/run/docker.sock");
 
+        String buildVolumeArg = String.format("%s:%s", taskContext.getWorkingDir(), "/build");
+
 	//console.printLine("Configuring container with image: " + taskConfig.getImageName());
         ContainerConfig containerConfig = ContainerConfig.builder()
                                  .image(taskConfig.getImageName())
+                                 .volumes(buildVolumeArg)
                                  .build();
 
 
