@@ -21,6 +21,8 @@ import com.thoughtworks.go.plugin.api.task.*;
 import com.spotify.docker.client.*;
 import com.spotify.docker.client.messages.*;
 
+import com.google.common.collect.*;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,12 +41,9 @@ public class DockerRunTaskExecutor {
         DockerClient docker = DefaultDockerClient.fromEnv().build();
 	//DockerClient docker = new DefaultDockerClient("unix:///var/run/docker.sock");
 
-        String buildVolumeArg = String.format("%s:%s", taskContext.getWorkingDir(), "/build");
-
 	//console.printLine("Configuring container with image: " + taskConfig.getImageName());
         ContainerConfig containerConfig = ContainerConfig.builder()
                                  .image(taskConfig.getImageName())
-                                 .volumes(buildVolumeArg)
                                  .build();
 
 
@@ -56,9 +55,16 @@ public class DockerRunTaskExecutor {
         // Inspect container
         // final ContainerInfo info = docker.inspectContainer(id);
         //
+	
+        final ImmutableList.Builder<String> binds = ImmutableList.builder();
+        binds.add(String.format("%s:%s", taskContext.getAbsoluteWorkingDir(), "/build"));
+
 
         // Start container
-        HostConfig hostConfig = HostConfig.builder().build();
+        HostConfig hostConfig = HostConfig.builder()
+                                    .binds(binds.build())
+                                    .build();
+
         docker.startContainer(id, hostConfig);
 	//console.printLine("Started container with id: " + id);
 

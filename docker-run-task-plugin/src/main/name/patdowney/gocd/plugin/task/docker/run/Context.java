@@ -16,6 +16,7 @@
 
 package name.patdowney.gocd.plugin.task.docker.run;
 
+import java.nio.file.Paths;
 import java.util.Map;
 
 public class Context {
@@ -33,6 +34,10 @@ public class Context {
 
     public String getWorkingDir() {
         return workingDir;
+    }
+
+    public String getAbsoluteWorkingDir() {
+        return Paths.get("").toAbsolutePath().resolve(workingDir).toString();
     }
 
     public String getPipelineDescription() {
