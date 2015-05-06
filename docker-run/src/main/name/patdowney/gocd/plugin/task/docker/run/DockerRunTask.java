@@ -38,11 +38,6 @@ import java.util.Map;
 public class DockerRunTask implements GoPlugin {
 
     public static final String IMAGE_NAME= "ImageName";
-    public static final String ADDITIONAL_OPTIONS = "AdditionalOptions";
-    public static final String SECURE_CONNECTION = "yes";
-    public static final String SECURE_CONNECTION_PROPERTY = "SecureConnection";
-    public static final String REQUEST_TYPE = "-G";
-    public static final String REQUEST_PROPERTY = "RequestType";
     Logger logger = Logger.getLoggerFor(DockerRunTask.class);
 
     @Override
