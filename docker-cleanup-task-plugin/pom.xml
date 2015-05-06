@@ -47,14 +47,14 @@
             <version>2.2.3</version>
         </dependency>
         <dependency>
-	    <groupId>com.spotify</groupId>
-	    <artifactId>docker-client</artifactId>
-	    <version>2.7.21</version>
-	</dependency>
+            <groupId>com.spotify</groupId>
+            <artifactId>docker-client</artifactId>
+            <version>2.7.21</version>
+        </dependency>
     </dependencies>
 
     <build>
-	<sourceDirectory>src/main</sourceDirectory>
+        <sourceDirectory>src/main</sourceDirectory>
         <resources>
             <resource>
                 <directory>resources</directory>
