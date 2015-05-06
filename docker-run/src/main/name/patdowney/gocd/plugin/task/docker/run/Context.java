@@ -1,5 +1,5 @@
 /*************************GO-LICENSE-START*********************************
- * Copyright 2014 ThoughtWorks, Inc.
+ * Copyright 2015 ThoughtWorks, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,4 +34,14 @@ public class Context {
     public String getWorkingDir() {
         return workingDir;
     }
+
+    public String getPipelineDescription() {
+        return String.format("%s_%s_%s_%s_%s",
+                environmentVariables.get("GO_PIPELINE_NAME").toString(),
+                environmentVariables.get("GO_PIPELINE_COUNTER").toString(),
+                environmentVariables.get("GO_STAGE_NAME").toString(),
+                environmentVariables.get("GO_STAGE_COUNTER").toString(),
+                environmentVariables.get("GO_JOB_NAME").toString());
+    }
+
 }
