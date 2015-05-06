@@ -60,7 +60,7 @@ public class DockerRunTask implements GoPlugin {
 
     private GoPluginApiResponse handleTaskView() {
         int responseCode = DefaultGoApiResponse.SUCCESS_RESPONSE_CODE;
-        Map view = new HashMap();
+        Map<String,String> view = new HashMap<String,String>();
         view.put("displayValue", "Docker Run");
         try {
             view.put("template", IOUtils.toString(getClass().getResourceAsStream("/views/docker.run.task.template.html"), "UTF-8"));
@@ -84,12 +84,12 @@ public class DockerRunTask implements GoPlugin {
     }
 
     private GoPluginApiResponse handleValidation(GoPluginApiRequest request) {
-        HashMap validationResult = new HashMap();
+        HashMap<String,Map> validationResult = new HashMap<String,Map>();
         int responseCode = DefaultGoPluginApiResponse.SUCCESS_RESPONSE_CODE;
         Map configMap = (Map) new GsonBuilder().create().fromJson(request.requestBody(), Object.class);
         if (!configMap.containsKey(IMAGE_NAME) || ((Map) configMap.get(IMAGE_NAME)).get("value") == null || ((String) ((Map) configMap.get(IMAGE_NAME)).get("value")).trim().isEmpty()) {
             responseCode = DefaultGoPluginApiResponse.VALIDATION_FAILED;
-            HashMap errorMap = new HashMap();
+            HashMap<String,String> errorMap = new HashMap<String,String>();
             errorMap.put(IMAGE_NAME, "Image name cannot be empty");
             validationResult.put("errors", errorMap);
         }
@@ -97,7 +97,7 @@ public class DockerRunTask implements GoPlugin {
     }
 
     private GoPluginApiResponse handleGetConfigRequest() {
-        HashMap config = new HashMap();
+        HashMap<String,Map> config = new HashMap<String,Map>();
         config.put(IMAGE_NAME, null);
 
 	// example of putting a default value

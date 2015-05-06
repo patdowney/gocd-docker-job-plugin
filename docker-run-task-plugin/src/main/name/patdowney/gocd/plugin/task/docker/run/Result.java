@@ -37,14 +37,14 @@ public class Result {
     }
 
     public Map toMap() {
-        final HashMap result = new HashMap();
-	result.put("success", success);
-	if(success) {
-          result.put("message", message);
-	} else {
-          result.put("message", exception.getMessage());
-          result.put("exception", exception.getClass().getName());
-	}
+        final HashMap<String,String> result = new HashMap<String,String>();
+        result.put("success", String.valueOf(success));
+        if(success) {
+            result.put("message", message);
+        } else {
+            result.put("message", exception.getMessage());
+            result.put("exception", exception.getClass().getName());
+        }
 
         return result;
     }
