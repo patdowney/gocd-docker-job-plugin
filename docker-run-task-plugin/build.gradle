@@ -1,0 +1,8 @@
+dependencies {
+  compile(
+    "cd.go.plugin:go-plugin-api:${goVersion}",
+    "commons-io:commons-io:2.4",
+    "com.google.code.gson:gson:2.2.3",
+    "com.spotify:docker-client:2.7.21"
+  )
+}
