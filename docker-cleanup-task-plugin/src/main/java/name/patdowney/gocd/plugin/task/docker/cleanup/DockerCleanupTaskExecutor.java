@@ -16,14 +16,13 @@
 
 package name.patdowney.gocd.plugin.task.docker.cleanup;
 
-import com.thoughtworks.go.plugin.api.task.*;
-
-import com.spotify.docker.client.*;
-import com.spotify.docker.client.messages.*;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import com.spotify.docker.client.DefaultDockerClient;
+import com.spotify.docker.client.DockerCertificateException;
+import com.spotify.docker.client.DockerClient;
+import com.spotify.docker.client.DockerException;
+import com.thoughtworks.go.plugin.api.task.JobConsoleLogger;
+import name.patdowney.gocd.plugin.common.Context;
+import name.patdowney.gocd.plugin.common.Result;
 
 public class DockerCleanupTaskExecutor {
     public Result execute(Config config, Context context, JobConsoleLogger console) { // throws Exception {
@@ -35,9 +34,10 @@ public class DockerCleanupTaskExecutor {
     }
 
     private Result runCleanup(Context taskContext, Config taskConfig, JobConsoleLogger console) throws DockerException, DockerCertificateException, InterruptedException {
+
         console.printEnvironment(taskContext.getEnvironmentVariables());
 
-	String id = taskContext.getPipelineDescription();
+	    String id = taskContext.getPipelineDescription();
 
         DockerClient docker = DefaultDockerClient.fromEnv().build();
 

@@ -1,5 +1,6 @@
 rootProject.name = 'gocd-docker-job-plugin'
 
+include 'docker-plugin-common'
 include 'docker-run-task-plugin'
 include 'docker-exec-task-plugin'
 include 'docker-cleanup-task-plugin'

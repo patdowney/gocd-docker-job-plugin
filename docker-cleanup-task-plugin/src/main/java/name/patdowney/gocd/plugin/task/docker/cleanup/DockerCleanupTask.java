@@ -16,6 +16,7 @@
 
 package name.patdowney.gocd.plugin.task.docker.cleanup;
 
+import com.google.gson.GsonBuilder;
 import com.thoughtworks.go.plugin.api.GoApplicationAccessor;
 import com.thoughtworks.go.plugin.api.GoPlugin;
 import com.thoughtworks.go.plugin.api.GoPluginIdentifier;
@@ -26,9 +27,10 @@ import com.thoughtworks.go.plugin.api.request.GoPluginApiRequest;
 import com.thoughtworks.go.plugin.api.response.DefaultGoApiResponse;
 import com.thoughtworks.go.plugin.api.response.DefaultGoPluginApiResponse;
 import com.thoughtworks.go.plugin.api.response.GoPluginApiResponse;
-import com.thoughtworks.go.plugin.api.task.*;
+import com.thoughtworks.go.plugin.api.task.JobConsoleLogger;
+import name.patdowney.gocd.plugin.common.*;
+
 import org.apache.commons.io.IOUtils;
-import com.google.gson.GsonBuilder;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -78,7 +80,7 @@ public class DockerCleanupTask implements GoPlugin {
         Map config = (Map) executionRequest.get("config");
         Map context = (Map) executionRequest.get("context");
 
-        Result result = executor.execute(new Config(config), new Context(context), JobConsoleLogger.getConsoleLogger());
+        name.patdowney.gocd.plugin.common.Result result = executor.execute(new Config(config), new Context(context), JobConsoleLogger.getConsoleLogger());
         return createResponse(result.responseCode(), result.toMap());
     }
 

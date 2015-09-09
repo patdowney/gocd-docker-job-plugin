@@ -1,0 +1,57 @@
+apply plugin: 'java'
+// apply plugin: 'application'
+apply plugin: 'idea'
+
+defaultTasks 'clean', 'build'
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+// UTF-8 should be standard by now. So use it!
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+group = 'name.patdowney.gocd.plugin'
+version = '1.0' // parent 
+
+// parent
+project.ext {
+    goVersion = '14.4.0'
+}
+
+dependencies {
+    compile(
+            "cd.go.plugin:go-plugin-api:${goVersion}",
+            "commons-io:commons-io:2.4",
+            "com.google.code.gson:gson:2.2.3",
+            "com.spotify:docker-client:2.7.21"
+    )
+}
+compileJava {
+    options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+}
+
+allprojects {
+
+    repositories {
+        mavenCentral()
+        mavenLocal()
+    }
+}
+
+
+subprojects {
+    apply plugin: 'java'
+
+    sourceCompatibility = project(":").sourceCompatibility
+    version = project(":").version
+}
+
+//jar {
+//  subprojects {
+//   from it.sourceSets.main.output
+//}
+//  mergeServiceFiles {
+//   exclude 'META-INF/*.DSA', 'META-INF/*.RSA'
+//}
+//}
+ 

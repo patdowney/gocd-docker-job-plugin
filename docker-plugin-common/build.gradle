@@ -4,7 +4,6 @@ compileJava {
 
 dependencies {
     compile(
-            project(":docker-plugin-common"),
             "cd.go.plugin:go-plugin-api:${goVersion}",
             "commons-io:commons-io:2.4",
             "com.google.code.gson:gson:2.2.3",
