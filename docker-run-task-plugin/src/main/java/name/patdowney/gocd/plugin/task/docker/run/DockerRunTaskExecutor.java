@@ -49,13 +49,21 @@ public class DockerRunTaskExecutor {
         DockerClient docker = DefaultDockerClient.fromEnv().build();
         //DockerClient docker = new DefaultDockerClient("unix:///var/run/docker.sock");
 
+        final ImmutableList.Builder<String> binds = ImmutableList.builder();
+        binds.add(String.format("%s:%s", taskContext.getAbsoluteWorkingDir(), containerBuildDir));
+
+        // Start container
+        HostConfig hostConfig = HostConfig.builder()
+                .binds(binds.build())
+                .build();
+
         //console.printLine("Configuring container with image: " + taskConfig.getImageName());
         ContainerConfig containerConfig = ContainerConfig.builder()
+                .hostConfig(hostConfig)
                 .image(taskConfig.getImageName())
                 .workingDir(containerBuildDir)
                 .cmd("sleep", "30000")
                 .build();
-
 
         //console.printLine("Creating container with name: " + taskContext.getPipelineDescription());
         ContainerCreation creation = docker.createContainer(containerConfig, taskContext.getPipelineDescription());
@@ -66,16 +74,7 @@ public class DockerRunTaskExecutor {
         // final ContainerInfo info = docker.inspectContainer(id);
         //
 
-        final ImmutableList.Builder<String> binds = ImmutableList.builder();
-        binds.add(String.format("%s:%s", taskContext.getAbsoluteWorkingDir(), containerBuildDir));
-
-
-        // Start container
-        HostConfig hostConfig = HostConfig.builder()
-                .binds(binds.build())
-                .build();
-
-        docker.startContainer(id, hostConfig);
+        docker.startContainer(id);
         //console.printLine("Started container with id: " + id);
 
         return new Result(true, "Image started: " + id + "(" + taskConfig.getImageName() + ")");

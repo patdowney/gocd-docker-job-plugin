@@ -4,8 +4,8 @@ apply plugin: 'idea'
 
 defaultTasks 'clean', 'build'
 
-sourceCompatibility = '1.8'
-targetCompatibility = '1.8'
+sourceCompatibility = '1.7'
+targetCompatibility = '1.7'
 
 // UTF-8 should be standard by now. So use it!
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
@@ -16,14 +16,17 @@ version = '1.0' // parent
 // parent
 project.ext {
     goVersion = '14.4.0'
+    commonsVersion = '2.4'
+    gsonVersion = '2.2.3'
+    spotifyDockerVersion = '3.1.4'
 }
 
 dependencies {
     compile(
             "cd.go.plugin:go-plugin-api:${goVersion}",
-            "commons-io:commons-io:2.4",
-            "com.google.code.gson:gson:2.2.3",
-            "com.spotify:docker-client:2.7.21"
+            "commons-io:commons-io:${commonsVersion}",
+            "com.google.code.gson:gson:${gsonVersion}",
+            "com.spotify:docker-client:${spotifyDockerVersion}"
     )
 }
 compileJava {
